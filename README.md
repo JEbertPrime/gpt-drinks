@@ -1,5 +1,6 @@
 # GPT-DRINKS
 Ever look at your bar cart and wonder what sort of cocktails you should be making? Well, now with the magic of AI, you can know!
+[GPT-DRINKS](https://gpt-drinks.vercel.app/)
 
 ## FEATURES
  - Type in ingredients
