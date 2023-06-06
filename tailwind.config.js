@@ -7,6 +7,17 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        fade: 'fadeOut .33s ease-in-out',
+      },
+
+      // that is actual animation
+      keyframes: theme => ({
+        fadeOut: {
+          '0%': { opacity: 0 },
+          '100%': { opactity: 1},
+        },
+      }),
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
