@@ -19,7 +19,6 @@ const IngredientList = (props)=> {
             setIngredients(tempIngredients)
         }
         if(e.keyCode == 8 && ingredients[ingredients.length -1] == '' && ingredients.length > 1){
-            console.log(ingredients)
             e.preventDefault()
             let tempIngredients = [...ingredients]
             tempIngredients.pop()
@@ -30,12 +29,12 @@ const IngredientList = (props)=> {
 
     })
     return (
-        <ul className="list-disc  text-neutral-700">
+        <ul className="  text-neutral-700">
                { ingredients.map((ingredient,i)=>{
                 if(i<ingredients.length - 1){
                     return <li className={liClasses} key={'ingredient-'+i}>{ingredient}</li>
                 }else{
-                    return <li className={liClasses} key={'ingredient-'+i}><input className="w-full" autoFocus value={ingredient} onKeyDown={handleKeyDown} onChange={handleChange}/></li>
+                    return <li className={liClasses} key={'ingredient-'+i}><input name='ingredient' aria-label={'Ingredient Input #'+i} className="w-full p-1" autoFocus value={ingredient} onKeyDown={handleKeyDown} onChange={handleChange} placeholder="ingredient"/></li>
                 }
                })}
         </ul>
