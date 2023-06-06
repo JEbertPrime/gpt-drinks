@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 
 const IngredientList = (props)=> {
     //classlists
-    const liClasses = 'w-full rounded-s p-2'
+    const liClasses = 'w-full rounded-s '
 
     const {ingredients, setIngredients} = props
     const handleChange = (e)=>{
