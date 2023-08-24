@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server';
-import openai from '../_lib/OpenAI'
-export async function POST(request){
-    const req = await request.json()
-    console.log(req[0])
-    const prompt = `Give me a list of three cocktails I can make with the ingredients I have. If the cocktail requires additional ingredients that I need to buy, list them in the "ingredients" field and also the "additionalIngredients" field. The list of cocktails should be in JSON format. Use the JSON object below as a guide:
+import { NextResponse } from "next/server";
+import openai from "../_lib/OpenAI";
+export async function POST(request) {
+  const req = await request.json();
+  const dev = false;
+  const prompt = `Give me a list of three cocktails I can make with the ingredients I have. If the cocktail requires additional ingredients that I need to buy, list them in the "ingredients" field and also the "additionalIngredients" field. The list of cocktails should be in JSON format. Use the JSON object below as a guide:
     {
     "cocktailName" : "name_of_cocktail",
     "ingredients" : [{"ingredientName" : "name_of_ingredient","amount" : "amount_of_ingredient"}],
@@ -13,17 +13,29 @@ export async function POST(request){
     
     Ingredients I own (ingredients with a ! at the end must be used): 
     '''
-    ${req.join(', ')}
-    '''`
+    ${req.join(", ")}
+    '''`;
+
+  if (!dev) {
     const response = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt:prompt,
-        temperature: 0,
-        max_tokens: 1024,
-      });
-      console.log(response.data.choices[0].text)
-    return NextResponse.json(response.data.choices[0])
-    /*return NextResponse.json({text:`[
+      model: "text-davinci-003",
+      prompt: prompt,
+      temperature: 0,
+      max_tokens: 1024,
+    });
+    if (response.status == 200) {
+      return NextResponse.json(response.data.choices[0]);
+    } else {
+      return NextResponse.json(
+        { error: response.statusText },
+        {
+          status: response.status,
+        }
+      );
+    }
+  } else {
+    return NextResponse.json({
+      text: `[
         {
           "cocktailName": "Minty Margarita",
           "ingredients": [
@@ -89,5 +101,7 @@ export async function POST(request){
           "recipe": "Add the bourbon, amaro, and sweet vermouth to a shaker filled with ice. Stir and strain into a glass filled with ice. Garnish with an orange peel.",
           "additionalIngredients": ["Sweet Vermouth"]
         }
-      ]`})*/
+      ]`,
+    });
+  }
 }
